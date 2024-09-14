@@ -5,9 +5,13 @@ public class Palavra {
     private ListaEncadeada<Integer> ocorrencias = new ListaEncadeada<>();
 
     //construtor
+    public Palavra(String palavra) {
+        this.palavra = palavra;
+    }
+
     public Palavra(String palavra, int numLinha) {
         this.palavra = palavra;
-        this.ocorrencias.addItem(numLinha);
+        this.ocorrencias.addElemento(numLinha);
     }
 
     //getters e setters
@@ -20,7 +24,7 @@ public class Palavra {
     }
 
     public void setOcorrencia(int numLinha) {
-        if (!ocorrencias.existeNaLista(numLinha)) this.ocorrencias.addItem(numLinha);
+        if (!ocorrencias.existeNaLista(numLinha)) this.ocorrencias.addElemento(numLinha);
 
 //        if (ocorrencias.existeNaLista(numLinha)) {
 //            //vida que segue

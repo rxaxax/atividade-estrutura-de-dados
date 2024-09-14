@@ -2,7 +2,7 @@ import java.util.Objects;
 
 public class ListaEncadeada<T> {
 
-    final int NAO_ENCONTRADO = -1;
+    private final int NAO_ENCONTRADO = -1;
 
     private class Celula {
 
@@ -14,12 +14,15 @@ public class ListaEncadeada<T> {
         public T getValor() {
             return valor;
         }
+
         public void setValor(T valor) {
             this.valor = valor;
         }
+
         public Celula getApontaPara() {
             return apontaPara;
         }
+
         public void setApontaPara(Celula apontaPara) {
             this.apontaPara = apontaPara;
         }
@@ -51,27 +54,28 @@ public class ListaEncadeada<T> {
     private int tamanhoLista = 0;
 
     //getters e setters
-    public T getCelula(Celula celula) {
+    private T getCelula(Celula celula) {
         return celula.getValor();
     }
-    public Celula getInicio() {
-        return inicio;
-    }
-    public void setInicio(Celula inicio) {
-        this.inicio = inicio;
-    }
-    public Celula getFim() {
-        return fim;
-    }
-    public void setFim(Celula fim) {
-        this.fim = fim;
-    }
+//    private Celula getInicio() {
+//        return inicio;
+//    }
+//    private void setInicio(Celula inicio) {
+//        this.inicio = inicio;
+//    }
+//    private Celula getFim() {
+//        return fim;
+//    }
+//    private void setFim(Celula fim) {
+//        this.fim = fim;
+//    }
     public int getTamanhoLista() {
         return tamanhoLista;
     }
 
     //construtores
-    public ListaEncadeada() {}
+    public ListaEncadeada() {
+    }
 
     public ListaEncadeada(T item) {
         Celula novaCelula = new Celula(item);
@@ -81,7 +85,7 @@ public class ListaEncadeada<T> {
     }
 
     //métodos
-    public void addItem(T item) {
+    public void addElemento(T item) {
         Celula novaCelula = new Celula(item);
         if (this.inicio == null) {
             this.inicio = novaCelula;
@@ -99,10 +103,44 @@ public class ListaEncadeada<T> {
 
         while (referencia != null) {
             if (referencia.getValor().equals(item)) return pos;
-            else pos++;
+            pos++;
             referencia = referencia.apontaPara;
         }
         return NAO_ENCONTRADO;
+    }
+
+    public int getPos(String item) {
+        //se encontrado, retorna a "posição"
+        Palavra palavra = new Palavra(item);
+        Celula referencia = this.inicio;
+        int pos = 0;
+
+        while (referencia != null) {
+
+            if (referencia.getValor(palavra).equals(item)) return pos;
+            System.out.println("aqui");
+
+            pos++;
+            referencia = referencia.apontaPara;
+        }
+        return NAO_ENCONTRADO;
+    }
+
+    public T getElemento(int pos) {
+        return this.buscaPos(pos).getValor();
+    }
+
+    private Celula buscaPos(int pos) {
+        if (!(pos >= 0 && pos <= this.tamanhoLista)) {
+            throw new NullPointerException("Posição buscada não existe na lista.");
+        }
+
+        Celula referencia = this.inicio;
+
+        for (int i = 0; i < pos; i++) {
+            referencia = referencia.apontaPara;
+        }
+        return referencia;
     }
 
     public boolean existeNaLista(T item) {
@@ -124,7 +162,7 @@ public class ListaEncadeada<T> {
 
     @Override
     public String toString() {
-        if (this.getInicio() == null) {
+        if (this.inicio == null) {
             return "[]";
         }
 

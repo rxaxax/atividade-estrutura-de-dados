@@ -32,7 +32,7 @@ public class TabelaHash<T> {
             if (this.tabela[indice] == null) {
                 this.tabela[indice] = new ListaEncadeada<>(item);
             } else {
-                this.tabela[indice].addItem(item);
+                this.tabela[indice].addElemento(item);
             }
         }
     }

@@ -45,7 +45,7 @@ public class Teste {
         }
 
         System.out.println(th.getTabela());
-        System.out.println(th.tabela[0].getInicio());
+        System.out.println(th.tabela[0]);
         System.out.println(th.tabela[0].getPos("and"));
         //System.out.println(th.tabela[0].getInicio().getValor());
 
