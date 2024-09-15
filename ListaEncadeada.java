@@ -118,7 +118,12 @@ public class ListaEncadeada<T> {
             if (referencia.getValor() instanceof Palavra) {
 
                 Palavra palavra = (Palavra) referencia.getValor();
-                if (palavra.getPalavra().equals(item)) return pos;
+                if (palavra.getPalavra().equals(item.toUpperCase())) return pos;
+            } else {
+                if (referencia.getValor().equals(item)) {
+                    return pos;
+                }
+
             }
 
             pos++;
