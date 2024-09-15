@@ -1,100 +1,54 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.text.Normalizer;
+
 public class Main {
 
     public static void main(String[] args) {
-        ListaEncadeada listaTeste = new ListaEncadeada<>();
 
-//        System.out.println(listaTeste);
-//
-//
-        Palavra palavraUm = new Palavra("qualquer coisa", 1);
-        Palavra palavraDois = new Palavra("outra coisa", 2);
-        Palavra palavraTres = new Palavra("uma coisita", 2);
-//        Palavra palavraQuatro = new Palavra("outra coisa", 2);
-//        Palavra palavraCinco = new Palavra("qql coisu", 2);
-//
-//        listaTeste.addItem(palavraCinco);
-//        System.out.println(listaTeste);
-//
-//        TabelaHash th = new TabelaHash<>(26);
-//        th.addNaTabela("palavraCinco");
-//        th.addNaTabela("palavraDois");
-//        th.addNaTabela("palavraCinco");
-//        System.out.println(th);
-//
-//        System.out.println(th.existeNaTabela("sdfsdfs"));
-//        System.out.println(th.existeNaTabela("palavraCinco"));
-//        System.out.println(th.tabela[0].getPos("palavraDois"));
+        String enderecoArquivo = "C:\\Users\\Renato\\Desktop\\atividade-final-estrutura-de-dados\\in.txt";
 
-
-
-      //  th.addNaTabela("palavraUm");
-//        th.addNaTabela(palavraDois);
-//        th.addNaTabela(palavraTres);
-//        th.addNaTabela(palavraQuatro);
-//        th.addNaTabela(palavraCinco);
-
-//        palavraUm.setOcorrencia(3);
-//        palavraUm.setOcorrencia(8);
-//        palavraDois.setOcorrencia(5);
-//        palavraTres.setOcorrencia(10);
-//        palavraTres.setOcorrencia(12);
-//        palavraQuatro.setOcorrencia(8);
-//
-//        System.out.println(palavraDois.getOcorrencias());
-
-        //System.out.println(palavraTres);
-        //System.out.println(palavraQuatro);
-        //System.out.println(palavraCinco);
-
-
-        ListaEncadeada teste = new ListaEncadeada<>();
-        teste.addElemento("maçã");
-        teste.addElemento("uva");
-        teste.addElemento("banana");
-        teste.addElemento("melão");
-        teste.addElemento("limão");
-        teste.addElemento("laranja");
-        System.out.println(teste);
-        System.out.println(teste.getElemento(4));
-
-        ListaEncadeada palavras = new ListaEncadeada<>();
-        palavras.addElemento(palavraUm);
-        palavras.addElemento(palavraDois);
-        palavras.addElemento(palavraTres);
-        System.out.println(palavras);
-        System.out.println(palavras.existeNaLista("uma coishjhita"));
-
+        FileReader fr = null;
+        BufferedReader br = null;
         TabelaHash th = new TabelaHash(26);
-        String palavra = "aviao";
 
-        if (!th.existeNaTabela(palavra)) {
-            th.addNaTabela(new Palavra(palavra));
+        try {
+
+            fr = new FileReader(enderecoArquivo);
+            br = new BufferedReader(fr);
+
+            String linha = br.readLine();
+            int numLinha = 1;
+
+            while (linha != null) {
+
+                String linhaNormalizada = Normalizer.normalize(linha, Normalizer.Form.NFD);
+                linhaNormalizada = linhaNormalizada.replaceAll("\\p{M}", "");
+                String[] palavras = linhaNormalizada.split("\\s+");
+
+                for (String palavra : palavras) {
+
+                    palavra = palavra.toUpperCase().replaceAll("[^a-zA-Z-]", "");
+
+                    if (!palavra.isEmpty()) {
+
+                        if (!th.existeNaTabela(palavra)) {
+                            th.addNaTabela(new Palavra(palavra, numLinha));
+                        } else {
+
+                            int posicao = th.getTabela(th.hash(palavra)).getPos(palavra);
+                            Object elemento = th.getTabela(th.hash(palavra)).getElemento(posicao);
+                            ((Palavra) elemento).setOcorrencia(numLinha);
+                        }
+                    }
+                }
+                linha = br.readLine();
+                numLinha++;
+            }
+        } catch (IOException e) {
+            System.out.println("Error: " + e.getMessage());
         }
-
-        String palavra2 = "agosto";
-
-        if (!th.existeNaTabela(palavra2)) {
-            th.addNaTabela(new Palavra(palavra2));
-        }
-
-        String palavra3 = "aviao";
-
-        if (!th.existeNaTabela(palavra3)) {
-            th.addNaTabela(new Palavra(palavra3));
-        }
-
-        if (th.existeNaTabela(palavra3)) {
-            int posicao = th.tabela[th.hash(palavra3)].getPos(palavra3);
-            Object elemento = th.tabela[th.hash(palavra3)].getElemento(posicao);
-            ((Palavra)elemento).setOcorrencia(55);
-            System.out.println(elemento);
-        }
-
-
         System.out.println(th);
-
-
-
-
     }
 }
