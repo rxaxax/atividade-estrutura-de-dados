@@ -1,6 +1,9 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.Normalizer;
+
+
 
 public class Teste {
     public static void main(String[] args) {
@@ -17,23 +20,33 @@ public class Teste {
             String linha = br.readLine();
             int numLinha = 1;
 
-
             while (linha != null) {
 
-                String[] palavras = linha.split(" ");
+                String linhaNormalizada = Normalizer.normalize(linha, Normalizer.Form.NFD);
+                linhaNormalizada = linhaNormalizada.replaceAll("\\p{M}", "");
+
+                String[] palavras = linhaNormalizada.split("\\s+");
                 //System.out.println(linha);
                 for (String palavra : palavras) {
 
                     palavra = palavra.toUpperCase().replaceAll("[^a-zA-Z-]", "");
 
+                    if (!palavra.isEmpty()) {
+                        if (!th.existeNaTabela(palavra)) {
+                            th.addNaTabela(new Palavra(palavra, numLinha));
+                        }
+                        if (th.existeNaTabela(palavra)) {
+                            int posicao = th.tabela[th.hash(palavra)].getPos(palavra);
+                            Object elemento = th.tabela[th.hash(palavra)].getElemento(posicao);
+                            ((Palavra) elemento).setOcorrencia(numLinha);
+                        }
 
-                    if (!th.existeNaTabela(palavra)) {
-                        th.addNaTabela(palavra);
+                        //System.out.println(palavra + " -> " + numLinha);
+
                     }
 
 
 
-                    System.out.println(palavra + " -> " + numLinha);
 
                 }
 
@@ -44,10 +57,7 @@ public class Teste {
             System.out.println("Error: " + e.getMessage());
         }
 
-        System.out.println(th.getTabela());
-        System.out.println(th.tabela[0]);
-        System.out.println(th.tabela[0].getPos("and"));
-        //System.out.println(th.tabela[0].getInicio().getValor());
+        System.out.println(th);
 
     }
 }

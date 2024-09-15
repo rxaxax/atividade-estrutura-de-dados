@@ -1,6 +1,6 @@
 import java.util.Arrays;
 
-public class TabelaHash<T> {
+public class TabelaHash {
 
     //atributos
     public ListaEncadeada[] tabela;
@@ -22,12 +22,12 @@ public class TabelaHash<T> {
     }
 
     //métodos
-    public void addNaTabela(T item) {
-        boolean ocorrenciaNaTabela = this.existeNaTabela(item);
+    public void addNaTabela(Palavra item) {
+        boolean ocorrenciaNaTabela = this.existeNaTabela(item.getPalavra());
 
         if (!ocorrenciaNaTabela) {
 
-            int indice = hash((String) item);
+            int indice = hash(item.getPalavra());
 
             if (this.tabela[indice] == null) {
                 this.tabela[indice] = new ListaEncadeada<>(item);
@@ -50,14 +50,15 @@ public class TabelaHash<T> {
 
 
     public int hash(String chave) {
+
         int indice = chave.toUpperCase().charAt(0);
         indice = indice - 'A'; //A = 65, B = 66, C = 67... A = 65 - 65 = 0, B = 66 - 65 = 1, C = 67 - 65 = 2...
         return indice;
-
     }
 
-    public boolean existeNaTabela(T item) {
-        int indice = hash((String) item);
+
+    public boolean existeNaTabela(String item) {
+        int indice = hash(item);
         if (this.tabela[indice] == null) {
             return false;
         } else {
@@ -67,9 +68,9 @@ public class TabelaHash<T> {
 
     @Override
     public String toString() {
-        return "TabelaHash{" +
-                "tabela=" + Arrays.toString(tabela) +
-                '}';
+        return "TabelaHash: [" +
+                "tabela = " + Arrays.toString(tabela) +
+                ']';
     }
 
 }

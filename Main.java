@@ -62,7 +62,38 @@ public class Main {
         palavras.addElemento(palavraDois);
         palavras.addElemento(palavraTres);
         System.out.println(palavras);
-        System.out.println(palavras.getPos("qualqur coisa"));
+        System.out.println(palavras.existeNaLista("uma coishjhita"));
+
+        TabelaHash th = new TabelaHash(26);
+        String palavra = "aviao";
+
+        if (!th.existeNaTabela(palavra)) {
+            th.addNaTabela(new Palavra(palavra));
+        }
+
+        String palavra2 = "agosto";
+
+        if (!th.existeNaTabela(palavra2)) {
+            th.addNaTabela(new Palavra(palavra2));
+        }
+
+        String palavra3 = "aviao";
+
+        if (!th.existeNaTabela(palavra3)) {
+            th.addNaTabela(new Palavra(palavra3));
+        }
+
+        if (th.existeNaTabela(palavra3)) {
+            int posicao = th.tabela[th.hash(palavra3)].getPos(palavra3);
+            Object elemento = th.tabela[th.hash(palavra3)].getElemento(posicao);
+            ((Palavra)elemento).setOcorrencia(55);
+            System.out.println(elemento);
+        }
+
+
+        System.out.println(th);
+
+
 
 
     }

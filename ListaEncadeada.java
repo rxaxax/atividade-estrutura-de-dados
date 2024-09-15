@@ -57,7 +57,8 @@ public class ListaEncadeada<T> {
     private T getCelula(Celula celula) {
         return celula.getValor();
     }
-//    private Celula getInicio() {
+
+    //    private Celula getInicio() {
 //        return inicio;
 //    }
 //    private void setInicio(Celula inicio) {
@@ -97,7 +98,6 @@ public class ListaEncadeada<T> {
     }
 
     public int getPos(T item) {
-        //se encontrado, retorna a "posição"
         Celula referencia = this.inicio;
         int pos = 0;
 
@@ -109,17 +109,16 @@ public class ListaEncadeada<T> {
         return NAO_ENCONTRADO;
     }
 
+    //sobrecarga do método para trabalharmos com nossa classe Palavra
     public int getPos(String item) {
-        //se encontrado, retorna a "posição"
-        Palavra palavra = new Palavra(item);
         Celula referencia = this.inicio;
         int pos = 0;
 
         while (referencia != null) {
-
-            if (referencia.getValor(palavra).equals(item)) return pos;
-            System.out.println("aqui");
-
+            if (referencia.getValor() instanceof Palavra) {
+                Palavra palavra = (Palavra) referencia.getValor();
+                if (palavra.getPalavra().equals(item)) return pos;
+            }
             pos++;
             referencia = referencia.apontaPara;
         }
@@ -142,8 +141,17 @@ public class ListaEncadeada<T> {
         }
         return referencia;
     }
+//
+//    if (referencia.getValor() instanceof Palavra) {
+//        Palavra palavra = (Palavra) referencia.getValor();
 
     public boolean existeNaLista(T item) {
+        if (getPos(item) != -1) return true;
+        return false;
+    }
+
+    //sobrecarga do método para trabalharmos com nossa classe Palavra
+    public boolean existeNaLista(String item) {
         if (getPos(item) != -1) return true;
         return false;
     }
