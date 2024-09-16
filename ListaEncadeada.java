@@ -8,7 +8,6 @@ public class ListaEncadeada<T> {
 
         //ATRIBUTOS
         private T valor;
-
         private Celula apontaPara;
 
         //GETTERS E SETTERS
@@ -36,6 +35,7 @@ public class ListaEncadeada<T> {
 
         //MÉTODOS
         public boolean equals(Object o) {
+
             if (this.valor == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
             Celula celula = ((Celula) o);
@@ -48,14 +48,11 @@ public class ListaEncadeada<T> {
                     "valor = " + valor +
                     ']';
         }
-        //FIM CELULA
     }
 
     //ATRIBUTOS
     private Celula inicio = null;
-
     private Celula fim = null;
-
     private int tamanhoLista = 0;
 
     //GETTERS E SETTERS
@@ -104,7 +101,6 @@ public class ListaEncadeada<T> {
             pos++;
             referencia = referencia.apontaPara;
         }
-
         return NAO_ENCONTRADO;
     }
 
@@ -123,9 +119,7 @@ public class ListaEncadeada<T> {
                 if (referencia.getValor().equals(item)) {
                     return pos;
                 }
-
             }
-
             pos++;
             referencia = referencia.apontaPara;
         }
@@ -143,7 +137,6 @@ public class ListaEncadeada<T> {
         for (int i = 0; i < pos; i++) {
             referencia = referencia.apontaPara;
         }
-
         return referencia;
     }
 
@@ -166,20 +159,19 @@ public class ListaEncadeada<T> {
 
         if (this.inicio == null) return "[]";
 
-        StringBuilder palavras = new StringBuilder("[");
+        StringBuilder palavras = new StringBuilder();
         Celula atual = this.inicio;
 
         for (int i = 0; i < tamanhoLista; i++) {
 
             while (atual.apontaPara != null) {
 
-                palavras.append(atual.getValor() + ", ");
+                palavras.append(atual.getValor()).append(", ");
                 atual = atual.apontaPara;
             }
         }
 
-        palavras.append(atual.getValor() + "]");
+        palavras.append(atual.getValor());
         return palavras.toString();
     }
-
 }

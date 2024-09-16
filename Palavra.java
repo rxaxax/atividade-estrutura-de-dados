@@ -1,8 +1,7 @@
 public class Palavra {
 
     //ATRIBUTOS
-    private String palavra;
-
+    private final String palavra;
     private ListaEncadeada<Integer> ocorrencias = new ListaEncadeada<>();
 
     //GETTERS E SETTERS
@@ -21,10 +20,6 @@ public class Palavra {
     }
 
     //CONSTRUTORES
-    public Palavra(String palavra) {
-        this.palavra = palavra;
-    }
-
     public Palavra(String palavra, int numLinha) {
         this.palavra = palavra;
         this.ocorrencias.addElemento(numLinha);
@@ -33,9 +28,6 @@ public class Palavra {
     //MÉTODOS
     @Override
     public String toString() {
-        return "Palavra: [" +
-                "String = " + palavra + " |" +
-                " Ocorrencias = " + ocorrencias +
-                ']';
+        return palavra + " " + ocorrencias;
     }
 }

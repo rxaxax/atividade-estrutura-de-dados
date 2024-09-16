@@ -1,7 +1,6 @@
-import java.sql.Array;
 import java.util.Arrays;
 
-public class TabelaHash <T>{
+public class TabelaHash {
 
     //ATRIBUTOS
     private ListaEncadeada[] tabela;
@@ -72,7 +71,13 @@ public class TabelaHash <T>{
         }
     }
 
-    public String[] converteParaListaEncadeada () {
+    public Object getElementoNaTabela(String palavra) {
+        int indice = hash(palavra);
+        int posicao = this.tabela[indice].getPos(palavra);
+        return this.tabela[indice].getElemento(posicao);
+    }
+
+    public String[] converterParaArray() {
         int numElementos = 0;
 
         for (ListaEncadeada cadaIndice : tabela) {
@@ -92,7 +97,6 @@ public class TabelaHash <T>{
                 }
             }
         }
-
         return arr;
     }
 
@@ -103,5 +107,3 @@ public class TabelaHash <T>{
                 ']';
     }
 }
-
-
